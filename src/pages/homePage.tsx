@@ -2,7 +2,7 @@ import React from 'react'
 
 const HomePage = () => {
   return (
-    <div className={'w-full max-w-xs'}>
+    <div className={'h-full w-full flex flex-col justify-center px-5'}>
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -24,8 +24,9 @@ const HomePage = () => {
         </div>
       </form>
       <p className="text-center text-gray-500 text-xs">
-        &copy;2020 Acme Corp. All rights reserved.
+        &copy;2022 최신 기술 프로젝트 2 TEAM SSD
       </p>
+      <div className={'w-full'}></div>
     </div>
   );
 }
