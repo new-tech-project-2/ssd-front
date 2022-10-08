@@ -1,9 +1,9 @@
 import React from 'react';
-
+import {router} from "./router";
+import {RouterProvider} from "react-router-dom";
 function App() {
   return (
-
-        <div></div>
+      <RouterProvider router={router} />
   );
 }
 
