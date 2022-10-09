@@ -1,9 +1,11 @@
 import { rest } from "msw";
 export const handlers = [
-    rest.post("/auth", (req, res, ctx) => {
+    rest.post("/auth", async (req, res, ctx) => {
+        const data = await req.json();
         return res(
+            ctx.delay(),
             ctx.status(200),
-            ctx.json({ success: req.params["token"].length > 3 })
+            ctx.json({ success: data.token.length > 3 })
         );
     }),
 ];
