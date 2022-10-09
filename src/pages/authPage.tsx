@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PrimaryTextField } from "../components/textField";
+import { PrimaryTextField } from "../common/components/textField";
 
 const AuthPage = () => {
     const [token, setToken] = useState("");
@@ -42,9 +42,7 @@ const AuthPage = () => {
                 onClick={() => {
                     navigate("/main");
                 }}
-            >
-                입장하기
-            </button>
+            ></button>
         </div>
     );
 };
