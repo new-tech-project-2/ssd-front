@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PrimaryTextField } from "../components/textField";
 
-const HomePage = () => {
+const AuthPage = () => {
     const [token, setToken] = useState("");
-
+    const navigate = useNavigate();
     const { status, data, error, refetch } = useQuery(
         ["auth"],
         async () => {
@@ -38,10 +39,13 @@ const HomePage = () => {
                 className={`btn btn-primary ${
                     data ? "btn-active" : "btn-disabled"
                 }  btn-wide`}
+                onClick={() => {
+                    navigate("/main");
+                }}
             >
                 입장하기
             </button>
         </div>
     );
 };
-export default HomePage;
+export default AuthPage;
