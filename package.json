@@ -48,7 +48,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-tailwindcss": "^3.6.2",
     "msw": "^0.47.4",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13"
   },
   "msw": {
     "workerDirectory": "public"
