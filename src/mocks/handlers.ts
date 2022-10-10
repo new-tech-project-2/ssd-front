@@ -8,4 +8,25 @@ export const handlers = [
             ctx.json({ success: data.token.length > 3 })
         );
     }),
+    rest.get("/drinkers", async (req, res, ctx) => {
+        const drinkers = [
+            {
+                id: "user1",
+                capacity: 11,
+                name: "심규진",
+                detail: "왕",
+            },
+            {
+                id: "user2",
+                capacity: 10,
+                name: "심규",
+                detail: "왕",
+            },
+        ];
+        return res(
+            ctx.delay(1000),
+            ctx.status(200),
+            ctx.json({ drinkers: drinkers })
+        );
+    }),
 ];

@@ -1,7 +1,8 @@
 {
-  "extends": ["prettier"],
-  "rules": {
-    "arrow-body-style": "off",
-    "prefer-arrow-callback": "off"
-  }
+    "extends": ["plugin:tailwindcss/recommended", "prettier"],
+    "rules": {
+        "arrow-body-style": "off",
+        "prefer-arrow-callback": "off"
+    },
+    "plugins": ["tailwindcss"]
 }

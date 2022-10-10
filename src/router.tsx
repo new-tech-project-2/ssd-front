@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import React from "react";
 import AuthPage from "./pages/authPage";
 import SplashPage from "./pages/splashPage";
-import MainPage from "./pages/mainPage";
+import MainPage from "./main/mainPage";
 
 export const router = createBrowserRouter([
     { path: "/", element: <SplashPage /> },
