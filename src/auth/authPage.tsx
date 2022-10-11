@@ -1,24 +1,49 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
+import { io } from "socket.io-client";
 import { PrimaryTextField } from "../common/components/textField";
 
 const AuthPage = () => {
-    const [token, setToken] = useState("");
+    const [dispenserToken, setDispenserToken] = useState("");
     const navigate = useNavigate();
+
     const { status, data, error, refetch } = useQuery(
         ["auth"],
         async () => {
-            const { data } = await axios.post("/auth", { token: token });
-
+            const { data } = await axios.post("/auth", {
+                dispenserToken: dispenserToken,
+            });
             return data.success;
         },
-        { initialData: false }
+        {
+            initialData: false,
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            retry: false,
+        }
     );
     useEffect(() => {
+        const socket = io({ path: "/socket" });
+        socket.on("connect", () => {
+            socket.on("add", (messaage) => {
+                console.log("add 이벤트 발생");
+            });
+            socket.on("dissconnet", () => {
+                console.log("해제");
+            });
+        });
+        return () => {
+            socket.close();
+        };
+    }, []);
+    useEffect(() => {
         refetch();
-    }, [token]);
+    }, [dispenserToken]);
     return (
         <div
             className={
@@ -38,7 +63,7 @@ const AuthPage = () => {
                 label="인증 토큰"
                 placeholder="인증 토큰을 입력하세요"
                 onChange={(event) => {
-                    setToken(event.target.value);
+                    setDispenserToken(event.target.value);
                 }}
                 errorMessage="인증 토큰이 잘못됐습니다."
                 isError={!data}
