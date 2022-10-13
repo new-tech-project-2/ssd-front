@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
+import { io, Socket } from "socket.io-client";
 
 import { PrimaryTextField } from "../common/components/TextField";
 
@@ -13,7 +13,7 @@ const AuthPage = () => {
     const { status, data, error, refetch } = useQuery(
         ["auth"],
         async () => {
-            const { data } = await axios.post("/auth", {
+            const { data } = await axios.post("/api/auth", {
                 dispenserToken: dispenserToken,
             });
             return data.success;
@@ -27,14 +27,15 @@ const AuthPage = () => {
         }
     );
     useEffect(() => {
-        const socket = new WebSocket("ws://192.168.0.42:8080/ws-stomp");
-        socket.onopen = () => {
-            socket.send("안녕하세요");
-            socket.onmessage = (event) => {
-                console.log(event.data);
-            };
+        const socketServer = io("/ws/socket");
+        socketServer.on("conneciton", (socket: Socket) => {
+            socket.on("add", (data) => {
+                console.log("add");
+            });
+        });
+        return () => {
+            socketServer.close();
         };
-        return () => {};
     }, []);
     useEffect(() => {
         refetch();
