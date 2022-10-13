@@ -1,4 +1,7 @@
 {
+    "env": {
+        "es6": true
+    },
     "extends": ["plugin:tailwindcss/recommended", "prettier"],
     "rules": {
         "arrow-body-style": "off",

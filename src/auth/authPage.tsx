@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { io } from "socket.io-client";
-import { PrimaryTextField } from "../common/components/textField";
+import { PrimaryTextField } from "../common/components/TextField";
 
 const AuthPage = () => {
     const [dispenserToken, setDispenserToken] = useState("");
@@ -28,18 +27,14 @@ const AuthPage = () => {
         }
     );
     useEffect(() => {
-        const socket = io({ path: "/socket" });
-        socket.on("connect", () => {
-            socket.on("add", (messaage) => {
-                console.log("add 이벤트 발생");
-            });
-            socket.on("dissconnet", () => {
-                console.log("해제");
-            });
-        });
-        return () => {
-            socket.close();
+        const socket = new WebSocket("ws://192.168.0.42:8080/ws-stomp");
+        socket.onopen = () => {
+            socket.send("안녕하세요");
+            socket.onmessage = (event) => {
+                console.log(event.data);
+            };
         };
+        return () => {};
     }, []);
     useEffect(() => {
         refetch();
