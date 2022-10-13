@@ -1,14 +1,8 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useRecoilValue } from "recoil";
-import authHeaderSelector from "../common/recoil/authHeaderSelector";
-import RegisteredUsers from "./components/RegisteredUsers";
-import Drinker from "./interfaces/drinker";
+import Button from "../common/components/Button";
 import LoadingBar from "../common/components/LoadingBar";
 import NumOfDrinkers from "./components/NumOfDrinkers";
+import RegisteredUsers from "./components/RegisteredUsers";
 import TotalAmountDrink from "./components/TotalAmountDrink";
-import Button from "../common/components/Button";
 import useMainViewModel from "./hooks/useMainViewModel";
 
 const MainPage = () => {
@@ -16,20 +10,20 @@ const MainPage = () => {
         useMainViewModel();
 
     return (
-        <div className="flex flex-col m-10">
-            <div className="flex flex-col mb-5">
-                <h1 className="text-4xl font-bold mb-2">술잔 등록하기</h1>
-                <span className="text-2xl text-gray-500 mb-3">
+        <div className="m-10 flex flex-col">
+            <div className="mb-5 flex flex-col">
+                <h1 className="mb-2 text-4xl font-bold">술잔 등록하기</h1>
+                <span className="mb-3 text-2xl text-gray-500">
                     SSD에 NFC 술잔을 인식해주세요.
                 </span>
-                <div className="flex flex-row justify-evenly mb-3">
+                <div className="mb-3 flex flex-row justify-evenly">
                     <NumOfDrinkers numOfDrinkers={numOfDrinkers} />
                     <TotalAmountDrink totalAmountDrink={totalAmountDrink} />
                 </div>
             </div>
             <RegisteredUsers drinkers={data} />
             {isFetching && <LoadingBar />}
-            <div className="py-5 flex justify-center">
+            <div className="flex justify-center py-5">
                 <Button>시작하기</Button>
             </div>
         </div>
