@@ -23,7 +23,10 @@ const MainPage = () => {
 
             return data.drinkers;
         },
-        { initialData: [] }
+        {
+            initialData: [],
+            refetchOnWindowFocus: false,
+        }
     );
 
     useEffect(() => {

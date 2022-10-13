@@ -3,8 +3,8 @@ import RegisteredUser from "./RegisteredUser";
 
 const RegisteredUsers = ({ drinkers }: { drinkers: Drinker[] }) => {
     return (
-        <div>
-            <span>등록된 술잔들</span>
+        <div className="mx-5 mb-5">
+            <span className="text-2xl">등록된 술잔들</span>
             {drinkers.map((registeredUser: Drinker) => {
                 return (
                     <RegisteredUser
