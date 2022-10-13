@@ -1,24 +1,21 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
+const PATH = "http://127.0.0.1:8080";
+const WS_PATH = "ws://127.0.0.1:8080"
 module.exports = function (app) {
     app.use(
-        "/api",
-        createProxyMiddleware({
-            target: "http://localhost:8080",
-            changeOrigin: true,
-            pathRewrite: function (path, req) {
-                return path.replace("/api", "");
-            },
-        })
+        createProxyMiddleware(
+            ['/api', '/socket'],
+            {
+              target: PATH,
+              changeOrigin: true,
+              ws: true,
+              pathRewrite : {'/api' : '', },
+              router: {
+                '/socket': WS_PATH,
+              }
+            }
+          )
     );
-    app.use(
-        "/ws",
-        createProxyMiddleware({
-            target: "http://localhost:8080",
-            ws: true,
-            pathRewrite: function (path, req) {
-                return path.replace("/ws", "");
-            },
-        })
-    );
+
 };
