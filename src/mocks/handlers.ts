@@ -13,8 +13,8 @@ export const handlers = [
             {
                 id: "user1",
                 capacity: 11,
-                name: "심규진",
-                detail: "왕",
+                name: "술 잘먹는 심규진",
+                detail: "심규진의 술잔 ㄹㅇ입니닫ㅇㅇㅇ",
             },
             {
                 id: "user2",
