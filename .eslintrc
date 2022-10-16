@@ -1,11 +1,39 @@
 {
     "env": {
-        "es6": true
+        "browser": true,
+        "es2021": true,
+	"jest": true
     },
-    "extends": ["plugin:tailwindcss/recommended", "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+	    "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest"
+
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
     "rules": {
-        "arrow-body-style": "off",
-        "prefer-arrow-callback": "off"
+
+	"react/react-in-jsx-scope": "off",
+	 "camelcase": "error",
+	 "spaced-comment": "error"
     },
-    "plugins": ["tailwindcss"]
+    "settings": {
+       "import/resolver": {
+         "typescript": {}
+       },
+       "react":{
+        "verosion": "detect"
+       }
+    }
 }

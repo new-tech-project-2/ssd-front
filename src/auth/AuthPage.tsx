@@ -10,9 +10,9 @@ const AuthPage = () => {
     const navigate = useNavigate();
 
     const { status, data, error, refetch } = useQuery(
-        ["auth"],
+        ["init"],
         async () => {
-            const { data } = await axios.post("/api/auth", {
+            const { data } = await axios.post("/api/init", {
                 dispenserToken: dispenserToken,
             });
             return data.success;
