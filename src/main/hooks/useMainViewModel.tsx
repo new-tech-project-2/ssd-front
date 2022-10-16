@@ -16,7 +16,7 @@ const useMainViewModel = () => {
     const { status, data, error, refetch, isFetching } = useQuery(
         ["drinkers"],
         async () => {
-            const { data } = await axios.get("/api/drinkers", {
+            const { data } = await axios.get("/api/drinker", {
                 headers: authHeader,
             });
 
