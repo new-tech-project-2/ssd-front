@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import authHeaderSelector from "../../common/recoil/authHeaderSelector";
-import axios from "axios";
 import Drinker from "../interfaces/drinker";
-import { useQuery } from "@tanstack/react-query";
 
 const useMainViewModel = () => {
     const authHeader = useRecoilValue(authHeaderSelector);
@@ -16,7 +16,7 @@ const useMainViewModel = () => {
     const { status, data, error, refetch, isFetching } = useQuery(
         ["drinkers"],
         async () => {
-            const { data } = await axios.get("/drinkers", {
+            const { data } = await axios.get("/api/drinkers", {
                 headers: authHeader,
             });
 

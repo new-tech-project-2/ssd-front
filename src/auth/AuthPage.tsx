@@ -1,47 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 
 import { PrimaryTextField } from "../common/components/TextField";
+import authTokenState from "../common/recoil/authTokenAtom";
 
 const AuthPage = () => {
     const [dispenserToken, setDispenserToken] = useState("");
-    const navigate = useNavigate();
 
+    const setAuthToken = useSetRecoilState(authTokenState);
     const { status, data, error, refetch } = useQuery(
-        ["init"],
+        ["auth"],
         async () => {
-            const { data } = await axios.post("/api/init", {
+            const { data } = await axios.post("/api/auth", {
                 dispenserToken: dispenserToken,
             });
-            return data.success;
+
+            return data;
         },
         {
-            initialData: false,
+            initialData: { success: false },
             refetchOnWindowFocus: false,
             refetchOnMount: false,
             refetchOnReconnect: false,
             retry: false,
         }
     );
-    useEffect(() => {
-        const socket = new WebSocket(
-            `ws://${window.location.host}/socket?type=web`
-        );
-        socket.onopen = () => {
-            console.log("소켓 연결");
-            socket.send("s");
-        };
-
-        socket.onmessage = (event) => {
-            console.log(event.data);
-        };
-
-        return () => {
-            socket.close();
-        };
-    }, []);
     useEffect(() => {
         refetch();
     }, [dispenserToken]);
@@ -67,15 +52,15 @@ const AuthPage = () => {
                     setDispenserToken(event.target.value);
                 }}
                 errorMessage="인증 토큰이 잘못됐습니다."
-                isError={!data}
+                isError={!data.success}
             />
 
             <button
                 className={`btn btn-primary btn-wide text-xl ${
-                    data ? "btn-active" : "btn-disabled"
+                    data.success ? "btn-active" : "btn-disabled"
                 }`}
                 onClick={() => {
-                    navigate("/main");
+                    setAuthToken(data.authToken);
                 }}
             >
                 시작하기
