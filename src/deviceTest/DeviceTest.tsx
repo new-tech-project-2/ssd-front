@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { io } from "socket.io-client";
 export const DeviceTest = () => {
     useEffect(() => {
-        const socket = io("/socket/device");
+        const socket = io("/socket/dispenser");
 
         return () => {
             socket.close();

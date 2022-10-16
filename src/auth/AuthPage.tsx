@@ -26,14 +26,14 @@ const AuthPage = () => {
         }
     );
     useEffect(() => {
-        const socket = new WebSocket(`ws://${window.location.host}/socket?type=web`);
+        const socket = new WebSocket(
+            `ws://${window.location.host}/socket?type=web`
+        );
         socket.onopen = () => {
-            
             console.log("소켓 연결");
             socket.send("s");
-            
         };
-        
+
         socket.onmessage = (event) => {
             console.log(event.data);
         };
