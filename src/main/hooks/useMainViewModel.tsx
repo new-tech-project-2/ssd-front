@@ -2,11 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { io } from "socket.io-client";
 import authHeaderSelector from "../../common/recoil/authHeaderSelector";
+import authTokenState from "../../common/recoil/authTokenAtom";
 import Drinker from "../interfaces/drinker";
 
 const useMainViewModel = () => {
     const authHeader = useRecoilValue(authHeaderSelector);
+    const authToken = useRecoilValue(authTokenState);
     // 현재 총 인원에 대한 state
     const [numOfDrinkers, setNumOfDrinkers] = useState(0);
     // 현재 총 필요한 술의 양에 대한 state
@@ -27,7 +30,19 @@ const useMainViewModel = () => {
             refetchOnWindowFocus: false,
         }
     );
-
+    useEffect(() => {
+        const socket = io({
+            path: "/socket/user",
+            query: { authToken },
+        });
+        socket.on("change", () => {
+            console.log("add");
+            refetch();
+        });
+        return () => {
+            socket.close();
+        };
+    }, []);
     useEffect(() => {
         if (data) {
             setNumOfDrinkers(data.length);

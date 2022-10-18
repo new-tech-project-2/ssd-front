@@ -6,7 +6,7 @@ const authHeaderSelector = selector<RawAxiosRequestHeaders>({
     key: "authHeader",
     get: ({ get }) => {
         const token = get(authTokenState);
-        return { Authentication: `Bearer ${token}` };
+        return { Authorization: `${token}` };
     },
 });
 

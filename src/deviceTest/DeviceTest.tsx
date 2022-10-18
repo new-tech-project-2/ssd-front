@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 export const DeviceTest = () => {
     const [tmpText, setTmpText] = useState("");
     const [dispenserToken, setDispenserToken] = useState("");
-    const [drinkerId, setDrinkerId] = useState(0);
+
     useEffect(() => {
         if (dispenserToken.length == 0) return;
         const socket = io({
@@ -20,8 +20,7 @@ export const DeviceTest = () => {
         setDispenserToken(tmpText);
     };
     const handleDrinkerReg = () => {
-        axios.post(`/api/drinker/${drinkerId}`, { dispenserToken });
-        setDrinkerId(drinkerId + 1);
+        axios.post(`/api/drinker/${Date.now()}`, { dispenserToken });
     };
     return (
         <div className="flex flex-col">
