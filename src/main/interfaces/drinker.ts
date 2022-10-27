@@ -1,6 +1,7 @@
 interface Drinker {
     id: string;
-    capacity: number;
+    totalCapacity: number;
+    currentDrinks: number;
     name: string;
     detail: string;
 }
