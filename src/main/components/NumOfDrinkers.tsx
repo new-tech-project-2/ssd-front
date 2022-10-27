@@ -1,6 +1,6 @@
 import { BiSmile } from "react-icons/bi";
 
-const NumOfDrinkers = ({ numOfDrinkers }: { numOfDrinkers: Number }) => {
+const NumOfDrinkers = ({ numOfDrinkers }: { numOfDrinkers: number }) => {
     return (
         <div className="flex flex-col">
             <div className="btn btn-primary btn-circle w-16 h-16 m-2">

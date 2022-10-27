@@ -1,10 +1,9 @@
-import React from "react";
 import { GiWineBottle } from "react-icons/gi";
 
 const TotalAmountDrink = ({
     totalAmountDrink,
 }: {
-    totalAmountDrink: Number;
+    totalAmountDrink: number;
 }) => {
     return (
         <div className="flex flex-col">

@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import authHeaderSelector from "../../common/recoil/authHeaderSelector";
-import axios from "axios";
-import Drinker from "../interfaces/drinker";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { io } from "socket.io-client";
+import { customAxios } from "../../common/axios/customAxis";
+import authHeaderSelector from "../../common/recoil/authHeaderSelector";
+import authTokenState from "../../common/recoil/authTokenAtom";
+import Drinker from "../interfaces/drinker";
 
 const useMainViewModel = () => {
     const authHeader = useRecoilValue(authHeaderSelector);
+    const authToken = useRecoilValue(authTokenState);
     // 현재 총 인원에 대한 state
     const [numOfDrinkers, setNumOfDrinkers] = useState(0);
     // 현재 총 필요한 술의 양에 대한 state
@@ -16,7 +19,7 @@ const useMainViewModel = () => {
     const { status, data, error, refetch, isFetching } = useQuery(
         ["drinkers"],
         async () => {
-            const { data } = await axios.get("/drinkers", {
+            const { data } = await customAxios.get("/drinker", {
                 headers: authHeader,
             });
 
@@ -27,7 +30,19 @@ const useMainViewModel = () => {
             refetchOnWindowFocus: false,
         }
     );
-
+    useEffect(() => {
+        const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
+            path: "/socket/user",
+            query: { authToken },
+        });
+        socket.on("change", () => {
+            console.log("add");
+            refetch();
+        });
+        return () => {
+            socket.close();
+        };
+    }, []);
     useEffect(() => {
         if (data) {
             setNumOfDrinkers(data.length);
