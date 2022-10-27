@@ -1,11 +1,11 @@
 import { BiEditAlt } from "react-icons/bi";
 
 const RegisteredUser = ({
-    capacity,
+    totalCapacity,
     name,
     detail,
 }: {
-    capacity: number;
+    totalCapacity: number;
     name: string;
     detail: string;
 }) => {
@@ -14,7 +14,7 @@ const RegisteredUser = ({
             <div className="card-body flex flex-row p-3">
                 <div className="card-title mr-1">
                     <span className="text-3xl text-primary shrink-0 w-16">
-                        {capacity}잔
+                        {totalCapacity}잔
                     </span>
                 </div>
                 <div className="flex flex-col flex-grow mx-1 truncate">

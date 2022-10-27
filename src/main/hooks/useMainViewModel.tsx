@@ -49,7 +49,7 @@ const useMainViewModel = () => {
 
             setTotalAmountDrink(
                 data.reduce((sum: number, drinkers: Drinker) => {
-                    return (sum += drinkers.capacity);
+                    return (sum += drinkers.totalCapacity);
                 }, 0) / 7.5
             );
         }
