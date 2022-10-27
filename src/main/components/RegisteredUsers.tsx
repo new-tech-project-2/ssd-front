@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useRecoilValue } from "recoil";
+import { customAxios } from "../../common/axios/customAxis";
 import authHeaderSelector from "../../common/recoil/authHeaderSelector";
 import Drinker from "../interfaces/drinker";
 import RegisteredUser from "./RegisteredUser";
@@ -12,7 +12,7 @@ const RegisteredUsers = ({ drinkers }: { drinkers: Drinker[] }) => {
             <button
                 className="btn glass"
                 onClick={() => {
-                    axios.delete("/api/drinker", { headers: authHeader });
+                    customAxios.delete("/drinker", { headers: authHeader });
                 }}
             >
                 삭제

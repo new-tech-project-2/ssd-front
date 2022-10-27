@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { io } from "socket.io-client";
+import { customAxios } from "../../common/axios/customAxis";
 import authHeaderSelector from "../../common/recoil/authHeaderSelector";
 import authTokenState from "../../common/recoil/authTokenAtom";
 import Drinker from "../interfaces/drinker";
@@ -19,7 +19,7 @@ const useMainViewModel = () => {
     const { status, data, error, refetch, isFetching } = useQuery(
         ["drinkers"],
         async () => {
-            const { data } = await axios.get("/api/drinker", {
+            const { data } = await customAxios.get("/drinker", {
                 headers: authHeader,
             });
 
@@ -31,7 +31,7 @@ const useMainViewModel = () => {
         }
     );
     useEffect(() => {
-        const socket = io({
+        const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
             path: "/socket/user",
             query: { authToken },
         });

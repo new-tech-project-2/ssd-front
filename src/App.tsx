@@ -7,7 +7,6 @@ import { authenticRouter, needAuthRotuer } from "./routes/router";
 const queryClient = new QueryClient();
 function App() {
     const authToken = useRecoilValue(authTokenState);
-
     return (
         <QueryClientProvider client={queryClient}>
             <RouterProvider

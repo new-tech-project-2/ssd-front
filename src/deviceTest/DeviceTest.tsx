@@ -1,26 +1,29 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { customAxios } from "../common/axios/customAxis";
 export const DeviceTest = () => {
     const [tmpText, setTmpText] = useState("");
     const [dispenserToken, setDispenserToken] = useState("");
 
     useEffect(() => {
         if (dispenserToken.length == 0) return;
-        const socket = io({
-            path: "/socket/dispenser",
-            query: { dispenserToken },
-        });
-
-        return () => {
-            socket.close();
-        };
+        try {
+            const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
+                path: "/socket/dispenser",
+                query: { dispenserToken },
+            });
+            return () => {
+                socket.close();
+            };
+        } catch (e) {
+            console.log(e);
+        }
     }, [dispenserToken]);
     const handleDeviceReg = () => {
         setDispenserToken(tmpText);
     };
     const handleDrinkerReg = () => {
-        axios.post(`/api/drinker/${Date.now()}`, { dispenserToken });
+        customAxios.post(`/drinker/${Date.now()}`, { dispenserToken });
     };
     return (
         <div className="flex flex-col">

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { customAxios } from "../common/axios/customAxis";
 
 import { PrimaryTextField } from "../common/components/TextField";
 import authTokenState from "../common/recoil/authTokenAtom";
@@ -13,7 +13,7 @@ const AuthPage = () => {
     const { status, data, error, refetch } = useQuery(
         ["auth"],
         async () => {
-            const { data } = await axios.post("/api/auth", {
+            const { data } = await customAxios.post("/auth", {
                 dispenserToken: dispenserToken,
             });
 
