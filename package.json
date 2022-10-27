@@ -3,13 +3,11 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@stomp/stompjs": "^6.1.2",
         "@tailwindcss/typography": "^0.5.7",
         "@tanstack/react-query": "^4.10.3",
         "autoprefixer": "^10.4.12",
         "axios": "^1.1.2",
         "daisyui": "^2.31.0",
-        "http-proxy-middleware": "^2.0.6",
         "postcss": "^8.4.17",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -18,7 +16,6 @@
         "react-scripts": "^5.1.0-next.14",
         "recoil": "^0.7.5",
         "socket.io-client": "^4.5.2",
-        "sockjs-client": "^1.6.1",
         "tailwindcss": "^3.1.8",
         "typescript": "^4.8.4",
         "web-vitals": "^2.1.4"
@@ -56,7 +53,6 @@
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-tailwindcss": "^3.6.2",
-        "msw": "^0.47.4",
         "prettier": "^2.7.1"
     },
     "standard": {
@@ -64,7 +60,5 @@
             "**/node_modules/**"
         ]
     },
-    "msw": {
-        "workerDirectory": "public"
-    }
+    "proxy": "https://api.soju.tk:443"
 }
