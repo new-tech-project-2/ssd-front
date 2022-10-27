@@ -1,12 +1,12 @@
 import { RawAxiosRequestHeaders } from "axios";
 import { selector } from "recoil";
-import tokenState from "./tokenAtom";
+import authTokenState from "./authTokenAtom";
 
 const authHeaderSelector = selector<RawAxiosRequestHeaders>({
     key: "authHeader",
     get: ({ get }) => {
-        const token = get(tokenState);
-        return { Authentication: `Bearer ${token}` };
+        const token = get(authTokenState);
+        return { Authorization: `${token}` };
     },
 });
 

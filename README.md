@@ -3,7 +3,13 @@
 ## 설치
 
 ```
-yarn install
+yarn install # npm으로 하면 절대 안됩니다.
+```
+
+## 실행
+
+```
+npm start
 ```
 
 ## 배포

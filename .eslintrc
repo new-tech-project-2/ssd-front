@@ -1,8 +1,32 @@
 {
-    "extends": ["plugin:tailwindcss/recommended", "prettier"],
-    "rules": {
-        "arrow-body-style": "off",
-        "prefer-arrow-callback": "off"
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true
     },
-    "plugins": ["tailwindcss"]
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "camelcase": "error",
+        "spaced-comment": "error"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    }
 }
