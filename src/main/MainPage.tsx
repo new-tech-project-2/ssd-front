@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../common/components/Button";
 import LoadingBar from "../common/components/LoadingBar";
 import NumOfDrinkers from "./components/NumOfDrinkers";
@@ -8,6 +9,7 @@ import useMainViewModel from "./hooks/useMainViewModel";
 const MainPage = () => {
     const { numOfDrinkers, totalAmountDrink, data, isFetching } =
         useMainViewModel();
+    const navigate = useNavigate();
 
     return (
         <div className="m-10 flex flex-col">
@@ -24,7 +26,13 @@ const MainPage = () => {
             <RegisteredUsers drinkers={data} />
             {isFetching && <LoadingBar />}
             <div className="flex justify-center py-5">
-                <Button>시작하기</Button>
+                <Button
+                    onClick={(_) => {
+                        navigate("/drink");
+                    }}
+                >
+                    시작하기
+                </Button>
             </div>
         </div>
     );
