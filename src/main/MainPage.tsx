@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { customAxios } from "../common/axios/customAxis";
 import Button from "../common/components/Button";
 import LoadingBar from "../common/components/LoadingBar";
+import authHeaderSelector from "../common/recoil/authHeaderSelector";
 import NumOfDrinkers from "./components/NumOfDrinkers";
 import RegisteredUsers from "./components/RegisteredUsers";
 import TotalAmountDrink from "./components/TotalAmountDrink";
 import useMainViewModel from "./hooks/useMainViewModel";
 
 const MainPage = () => {
+    const authHeader = useRecoilValue(authHeaderSelector);
+    console.log(authHeader);
     const { numOfDrinkers, totalAmountDrink, data, isFetching } =
         useMainViewModel();
     const navigate = useNavigate();
@@ -29,6 +34,13 @@ const MainPage = () => {
                 <Button
                     className="btn-wide"
                     onClick={(_) => {
+                        customAxios.post(
+                            "/dispenser",
+                            {},
+                            {
+                                headers: authHeader,
+                            }
+                        );
                         navigate("/drink");
                     }}
                 >
