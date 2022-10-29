@@ -17,7 +17,7 @@ const useMainViewModel = () => {
 
     // 현재 연결된 drinkers에 대한 정보 가져오기
     const { status, data, error, refetch, isFetching } = useQuery(
-        ["drinkers"],
+        ["get/drinkers"],
         async () => {
             const { data } = await customAxios.get("/drinker", {
                 headers: authHeader,

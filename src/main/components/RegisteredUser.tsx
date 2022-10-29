@@ -1,10 +1,13 @@
 import { BiEditAlt } from "react-icons/bi";
+import MainEdit from "../../mainEdit/MainEdit";
 
 const RegisteredUser = ({
+    id,
     totalCapacity,
     name,
     detail,
 }: {
+    id: string;
     totalCapacity: number;
     name: string;
     detail: string;
@@ -22,12 +25,21 @@ const RegisteredUser = ({
                     <span className="truncate">{detail}</span>
                 </div>
                 <div className="card-action">
-                    <button className="btn btn-secondary ml-1 rounded-lg w-14 h-14 shrink-0">
+                    <label
+                        htmlFor={`my-modal-${id}`}
+                        className="btn modal-button btn-secondary ml-1 rounded-lg w-14 h-14 shrink-0"
+                    >
                         <BiEditAlt className="text-2xl" />
-                    </button>
+                    </label>
                 </div>
             </div>
-            <img />
+
+            <MainEdit
+                id={id}
+                totalCapacity={totalCapacity}
+                name={name}
+                detail={detail}
+            />
         </div>
     );
 };

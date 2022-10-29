@@ -69,6 +69,7 @@ const DrinkPage = () => {
             {/* {isFetching && <LoadingBar />} */}
             <div className="flex justify-center py-5">
                 <Button
+                    className="btn-wide"
                     onClick={(_) => {
                         navigate("/");
                     }}
