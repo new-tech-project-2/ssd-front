@@ -36,7 +36,6 @@ const useMainViewModel = () => {
             query: { authToken },
         });
         socket.on("change", () => {
-            console.log("add");
             refetch();
         });
         return () => {
