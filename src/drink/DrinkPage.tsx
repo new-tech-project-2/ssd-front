@@ -1,54 +1,20 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { customAxios } from "../common/axios/customAxis";
-import { useRecoilValue } from "recoil";
-import authHeaderSelector from "../common/recoil/authHeaderSelector";
-import authTokenState from "../common/recoil/authTokenAtom";
 import Button from "../common/components/Button";
 import DrinksStates from "./components/DrinkersStates";
 import DrinkStatePrev from "./components/DrinkStatePrev";
 import Timer from "./components/Timer";
-import Drinker from "../main/interfaces/drinker";
+import LoadingBar from "../common/components/LoadingBar";
+import useDrinkPageModel from "./hooks/useDrinkPageModel";
+import OverAlarm from "../alarm/OverAlarm";
 
 const DrinkPage = () => {
-    const authHeader = useRecoilValue(authHeaderSelector);
-    const authToken = useRecoilValue(authTokenState);
-
-    const navigate = useNavigate();
-
-    // 현재 사용자들이 마신 술잔의 수에 대한 state
-    const [currentNumOfGlasses, setCurrentNumOfGlass] = useState();
-    // 사용자들의 총 주량
-    let totalNumOfGlasses = 0;
-
-    // 현재 연결된 drinkers에 대한 정보 가져오기
-    const { status, data, error, refetch, isFetching } = useQuery(
-        ["drinkers"],
-        async () => {
-            const { data } = await customAxios.get("/drinker", {
-                headers: authHeader,
-            });
-
-            return data.drinkers;
-        },
-        {
-            initialData: [],
-            refetchOnWindowFocus: false,
-        }
-    );
-
-    useEffect(() => {
-        if (data) {
-            totalNumOfGlasses = data.reduce(
-                (sum: number, drinkers: Drinker) => {
-                    console.log();
-                    return (sum += drinkers.totalCapacity);
-                },
-                0
-            );
-        }
-    }, [isFetching]);
+    const {
+        currentNumOfGlasses,
+        totalNumOfGlasses,
+        isFetching,
+        data,
+        stopHandler,
+        overDrink,
+    } = useDrinkPageModel();
 
     return (
         <div className="m-10 flex flex-col">
@@ -58,25 +24,21 @@ const DrinkPage = () => {
                     안전은 SSD가 책임질게요.
                 </span>
                 <div className="mb-3 flex flex-row justify-between">
-                    {/* 마신 총 잔 수 */}
-                    <DrinkStatePrev totalNumOfGlasses={totalNumOfGlasses} />
-                    {/* 타이머 */}
+                    <DrinkStatePrev
+                        curruntNumOfGlasses={currentNumOfGlasses}
+                        totalNumOfGlasses={totalNumOfGlasses}
+                    />
                     <Timer />
                 </div>
             </div>
-            {/* 현재 유저별 드링크 상태 */}
-            <DrinksStates drinkers={data} />
-            {/* {isFetching && <LoadingBar />} */}
+            {isFetching && <LoadingBar />}
+            {!isFetching && <DrinksStates drinkers={data} />}
             <div className="flex justify-center py-5">
-                <Button
-                    className="btn-wide"
-                    onClick={(_) => {
-                        navigate("/");
-                    }}
-                >
+                <Button className="btn-wide" onClick={stopHandler}>
                     중지하기
                 </Button>
             </div>
+            <OverAlarm overDrink={overDrink} />
         </div>
     );
 };

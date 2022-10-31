@@ -1,8 +1,10 @@
 import { GiWineBottle } from "react-icons/gi";
 
 const DrinkStatePrev = ({
+    curruntNumOfGlasses,
     totalNumOfGlasses,
 }: {
+    curruntNumOfGlasses: number;
     totalNumOfGlasses: number;
 }) => {
     return (
@@ -12,7 +14,7 @@ const DrinkStatePrev = ({
             </div>
             <div className="h-16 m-2 flex items-center">
                 <span className="text-center text-3xl font-semibold">
-                    {`14/${totalNumOfGlasses}`}
+                    {`${curruntNumOfGlasses}/${totalNumOfGlasses}`}
                 </span>
             </div>
         </div>

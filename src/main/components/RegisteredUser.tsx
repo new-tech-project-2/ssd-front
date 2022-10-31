@@ -26,7 +26,7 @@ const RegisteredUser = ({
                 </div>
                 <div className="card-action">
                     <label
-                        htmlFor={`my-modal-${id}`}
+                        htmlFor={`modal-${id}`}
                         className="btn modal-button btn-secondary ml-1 rounded-lg w-14 h-14 shrink-0"
                     >
                         <BiEditAlt className="text-2xl" />

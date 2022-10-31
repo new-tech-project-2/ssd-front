@@ -11,7 +11,6 @@ import useMainViewModel from "./hooks/useMainViewModel";
 
 const MainPage = () => {
     const authHeader = useRecoilValue(authHeaderSelector);
-    console.log(authHeader);
     const { numOfDrinkers, totalAmountDrink, data, isFetching } =
         useMainViewModel();
     const navigate = useNavigate();
