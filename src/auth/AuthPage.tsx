@@ -11,9 +11,9 @@ const AuthPage = () => {
 
     const setAuthToken = useSetRecoilState(authTokenState);
     const { status, data, error, refetch } = useQuery(
-        ["auth"],
+        ["post/login"],
         async () => {
-            const { data } = await customAxios.post("/auth", {
+            const { data } = await customAxios.post("/dispenser/login", {
                 dispenserToken: dispenserToken,
             });
 
@@ -64,7 +64,7 @@ const AuthPage = () => {
                         data.success ? "btn-active" : "btn-disabled"
                     }`}
                     onClick={() => {
-                        setAuthToken(data.authToken);
+                        setAuthToken(data.drinkerToken);
                     }}
                 >
                     시작하기
