@@ -4,12 +4,12 @@ import MainEdit from "../../mainEdit/MainEdit";
 const RegisteredUser = ({
     id,
     totalCapacity,
-    name,
+    drinkerName,
     detail,
 }: {
     id: string;
     totalCapacity: number;
-    name: string;
+    drinkerName: string;
     detail: string;
 }) => {
     return (
@@ -21,7 +21,9 @@ const RegisteredUser = ({
                     </span>
                 </div>
                 <div className="flex flex-col flex-grow mx-1 truncate">
-                    <span className="font-bold mb-1 truncate">{name}</span>
+                    <span className="font-bold mb-1 truncate">
+                        {drinkerName}
+                    </span>
                     <span className="truncate">{detail}</span>
                 </div>
                 <div className="card-action">
@@ -37,7 +39,7 @@ const RegisteredUser = ({
             <MainEdit
                 id={id}
                 totalCapacity={totalCapacity}
-                name={name}
+                drinkerName={drinkerName}
                 detail={detail}
             />
         </div>

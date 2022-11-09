@@ -7,17 +7,17 @@ import authHeaderSelector from "../../common/recoil/authHeaderSelector";
 const useMainEditModel = ({
     id,
     totalCapacity,
-    name,
+    drinkerName,
     detail,
 }: {
     id: string;
     totalCapacity: number;
-    name: string;
+    drinkerName: string;
     detail: string;
 }) => {
     const authHeader = useRecoilValue(authHeaderSelector);
 
-    const [inputName, setInputName] = useState(name);
+    const [inputName, setInputName] = useState(drinkerName);
     const [inputDetail, setInputDetail] = useState(detail);
     const [inputCapacity, setInputCapacity] = useState(totalCapacity);
 
@@ -39,13 +39,13 @@ const useMainEditModel = ({
 
     // 수정하기 버튼 눌렀을 때 실행될 useQuery (Axios), 수정 후 백엔드 서버에서 자동으로 바뀐 값들에 대해 message 전달함 (socket)
     const { refetch: updateRefetch } = useQuery(
-        ["patch/drinker"],
+        ["patch/updateglass"],
         async () => {
             const { data: updateData } = await customAxios.patch(
-                `/drinker/${id}`,
+                `/glass/updateglass/${id}`,
                 {
                     totalCapacity: inputCapacity,
-                    name: inputName,
+                    drinkerName: inputName,
                     detail: inputDetail,
                 },
                 {
@@ -62,12 +62,12 @@ const useMainEditModel = ({
         }
     );
 
-    // 수정하기 버튼 눌렀을 때 실행될 useQuery (Axios)
+    // 삭제하기 버튼 눌렀을 때 실행될 useQuery (Axios)
     const { refetch: delRefetch } = useQuery(
-        ["delete/drinker"],
+        ["delete/deleteglass"],
         async () => {
             const { data: delData } = await customAxios.delete(
-                `/drinker/${id}`,
+                `/glass/deleteglass/${id}`,
                 {
                     headers: authHeader,
                 }

@@ -5,12 +5,12 @@ import useMainEditModel from "./hooks/useMainEditModel";
 const MainEdit = ({
     id,
     totalCapacity,
-    name,
+    drinkerName,
     detail,
 }: {
     id: string;
     totalCapacity: number;
-    name: string;
+    drinkerName: string;
     detail: string;
 }) => {
     const {
@@ -22,7 +22,7 @@ const MainEdit = ({
         changeInputCapacityHandler,
         editHandler,
         deleteHandler,
-    } = useMainEditModel({ id, totalCapacity, name, detail });
+    } = useMainEditModel({ id, totalCapacity, drinkerName, detail });
 
     return (
         <>

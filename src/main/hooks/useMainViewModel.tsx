@@ -17,13 +17,13 @@ const useMainViewModel = () => {
 
     // 현재 연결된 drinkers에 대한 정보 가져오기
     const { status, data, error, refetch, isFetching } = useQuery(
-        ["get/drinkers"],
+        ["get/getglass"],
         async () => {
-            const { data } = await customAxios.get("/drinker", {
+            const { data } = await customAxios.get("/glass/getglass", {
                 headers: authHeader,
             });
 
-            return data.drinkers;
+            return data;
         },
         {
             initialData: [],
@@ -47,8 +47,8 @@ const useMainViewModel = () => {
             setNumOfDrinkers(data.length);
 
             setTotalAmountDrink(
-                data.reduce((sum: number, drinkers: Drinker) => {
-                    return (sum += drinkers.totalCapacity);
+                data.reduce((sum: number, drinker: Drinker) => {
+                    return (sum += drinker.totalCapacity);
                 }, 0) / 7.5
             );
         }
