@@ -24,13 +24,13 @@ const useDrinkPageModel = () => {
 
     // 현재 연결된 drinkers에 대한 정보 가져오기
     const { data, refetch, isFetching } = useQuery(
-        ["get/drinker"],
+        ["get/getglass"],
         async () => {
-            const { data } = await customAxios.get("/drinker", {
+            const { data } = await customAxios.get("/glass/getglass", {
                 headers: authHeader,
             });
 
-            return data.drinkers;
+            return data;
         },
         {
             initialData: [],
@@ -42,8 +42,8 @@ const useDrinkPageModel = () => {
     useEffect(() => {
         if (data) {
             setTotalNumOfGlasses(
-                data.reduce((sum: number, drinkers: Drinker) => {
-                    return (sum += drinkers.totalCapacity);
+                data.reduce((sum: number, drinker: Drinker) => {
+                    return (sum += drinker.totalCapacity);
                 }, 0)
             );
         }
@@ -53,7 +53,7 @@ const useDrinkPageModel = () => {
     useEffect(() => {
         if (data) {
             for (let i = 0; i < data.length; i++) {
-                if (data[i].currentDrinks === data[i].totalCapacity + 1) {
+                if (data[i].currentDrink === data[i].totalCapacity + 1) {
                     setOverDrink((prev: string[]) => {
                         return [...prev, data[i].name];
                     });
@@ -61,8 +61,8 @@ const useDrinkPageModel = () => {
             }
 
             setCurrentNumOfGlasses(
-                data.reduce((sum: number, drinkers: Drinker) => {
-                    return (sum += drinkers.currentDrinks);
+                data.reduce((sum: number, drinker: Drinker) => {
+                    return (sum += drinker.currentDrink);
                 }, 0)
             );
         }
