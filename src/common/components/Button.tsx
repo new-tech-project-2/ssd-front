@@ -13,7 +13,7 @@ const Button = ({
 }) => {
     return (
         <button
-            className={`btn btn-primary text-xl ${className || ""} ${
+            className={`btn btn-primary text-xl w-full ${className || ""} ${
                 isEnable ? "btn-active" : "btn-disabled"
             }`}
             onClick={onClick}
