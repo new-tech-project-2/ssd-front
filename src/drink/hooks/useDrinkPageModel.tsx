@@ -75,10 +75,10 @@ const useDrinkPageModel = () => {
     // 누군가 술을 마시는 경우를 대비해 socket 연결 후, change message에 대해 듣고 있도록
     useEffect(() => {
         const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
-            path: "/socket/user",
+            path: "/sw/socket/glass",
             query: { authToken },
         });
-        socket.on("change", () => {
+        socket.on("drinkOneGlass", () => {
             refetch();
         });
         return () => {

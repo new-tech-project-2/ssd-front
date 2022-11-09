@@ -32,10 +32,10 @@ const useMainViewModel = () => {
     );
     useEffect(() => {
         const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
-            path: "/socket/user",
+            path: "/ws/socker/glass",
             query: { authToken },
         });
-        socket.on("change", () => {
+        socket.on("addGlass", () => {
             refetch();
         });
         return () => {
