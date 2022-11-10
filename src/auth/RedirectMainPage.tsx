@@ -5,7 +5,7 @@ const RedirectMainPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        navigate("/drink");
+        navigate("/main");
     }, []);
 
     return <></>;

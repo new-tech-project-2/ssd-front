@@ -24,7 +24,8 @@
         "start": "export PORT=3002 && react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "deploy": "aws s3 sync ./build s3://ssd-front-deploy --profile=ssd-back-deploy-s3"
     },
     "browserslist": {
         "production": [
@@ -60,5 +61,5 @@
             "**/node_modules/**"
         ]
     },
-    "proxy": "https://api.soju.tk:443"
+    "proxy": "http://44.212.214.187:8080"
 }

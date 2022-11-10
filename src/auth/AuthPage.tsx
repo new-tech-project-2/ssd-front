@@ -13,9 +13,13 @@ const AuthPage = () => {
     const { status, data, error, refetch } = useQuery(
         ["post/login"],
         async () => {
-            const { data } = await customAxios.post("/dispenser/login", {
-                dispenserToken: dispenserToken,
-            });
+            const { data } = await customAxios.post(
+                "/dispenser/login",
+                {},
+                {
+                    headers: { dispenserToken: `${dispenserToken}` },
+                }
+            );
 
             return data;
         },
