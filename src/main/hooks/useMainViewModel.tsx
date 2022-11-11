@@ -6,6 +6,7 @@ import { customAxios } from "../../common/axios/customAxis";
 import authHeaderSelector from "../../common/recoil/authHeaderSelector";
 import authTokenState from "../../common/recoil/authTokenAtom";
 import Drinker from "../interfaces/drinker";
+import { useNavigate } from "react-router-dom";
 
 const useMainViewModel = () => {
     const authHeader = useRecoilValue(authHeaderSelector);
@@ -21,6 +22,8 @@ const useMainViewModel = () => {
     const socketUrl = `${process.env.REACT_APP_SOCKET_ROUTE}/ws/socket/glass`;
     const ws = useRef<WebSocket | null>(null);
     const [socketConnected, setSocketConnected] = useState(false);
+
+    const navigate = useNavigate();
 
     // 현재 연결된 drinkers에 대한 정보 가져오기
     const { status, data, error, refetch, isFetching } = useQuery(
@@ -53,6 +56,16 @@ const useMainViewModel = () => {
         };
         ws.current.onmessage = (msg: MessageEvent) => {
             console.log(msg);
+            switch (msg.data) {
+                case "술자리가 시작되었습니다!":
+                    // native 연결
+                    console.log("페이지 변화");
+                    navigate("/main");
+                    break;
+                case "dispenser01에 술잔이 등록되었습니다":
+                    refetch();
+                    break;
+            }
         };
         // const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
         //     path: "/ws/socker/glass",
@@ -66,17 +79,17 @@ const useMainViewModel = () => {
             setSocketConnected(false);
         };
     }, []);
-    useEffect(() => {
-        console.log("socketConnected");
-        if (ws.current?.readyState === 1 && ws.current != null) {
-            console.log("send!!");
-            ws.current?.send(`startDispenser:${"dispenser01"}`);
-            console.log(JSON.stringify({ startDispenser: "dispenser01" }));
-            // ws.current!.onmessage = (msg: MessageEvent) => {
-            //     console.log(msg);
-            // };
-        }
-    }, [socketConnected]);
+    // useEffect(() => {
+    //     console.log("socketConnected");
+    //     if (ws.current?.readyState === 1 && ws.current != null) {
+    //         console.log("send!!");
+    //         ws.current?.send(`startDispenser:${"dispenser01"}`);
+    //         console.log(JSON.stringify({ startDispenser: "dispenser01" }));
+    //         // ws.current!.onmessage = (msg: MessageEvent) => {
+    //         //     console.log(msg);
+    //         // };
+    //     }
+    // }, [socketConnected]);
     useEffect(() => {
         if (data) {
             setNumOfDrinkers(data.length);
@@ -89,7 +102,7 @@ const useMainViewModel = () => {
         }
     }, [isFetching]);
 
-    return { numOfDrinkers, totalAmountDrink, data, isFetching };
+    return { numOfDrinkers, totalAmountDrink, data, isFetching, ws };
 };
 
 export default useMainViewModel;
