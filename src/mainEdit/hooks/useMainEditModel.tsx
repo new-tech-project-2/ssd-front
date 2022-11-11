@@ -39,7 +39,7 @@ const useMainEditModel = ({
 
     // 수정하기 버튼 눌렀을 때 실행될 useQuery (Axios), 수정 후 백엔드 서버에서 자동으로 바뀐 값들에 대해 message 전달함 (socket)
     const { refetch: updateRefetch } = useQuery(
-        ["patch/updateglass"],
+        ["patch/glass"],
         async () => {
             const { data: updateData } = await customAxios.patch(
                 `/glass/${id}`,
@@ -64,14 +64,11 @@ const useMainEditModel = ({
 
     // 삭제하기 버튼 눌렀을 때 실행될 useQuery (Axios)
     const { refetch: delRefetch } = useQuery(
-        ["delete/deleteglass"],
+        ["delete/glass"],
         async () => {
-            const { data: delData } = await customAxios.delete(
-                `/glass/deleteglass/${id}`,
-                {
-                    headers: authHeader,
-                }
-            );
+            const { data: delData } = await customAxios.delete(`/glass/${id}`, {
+                headers: authHeader,
+            });
 
             return delData;
         },

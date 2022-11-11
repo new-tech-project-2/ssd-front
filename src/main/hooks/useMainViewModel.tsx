@@ -66,10 +66,10 @@ const useMainViewModel = () => {
             const data = JSON.parse(msg.data);
             switch (data.eventType) {
                 case "change":
-                    navigate("/drink");
+                    refetch();
                     break;
                 case "dispenser01에 술잔이 등록되었습니다":
-                    refetch();
+                    // navigate("/main");
                     break;
             }
         };
