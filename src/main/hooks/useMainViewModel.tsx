@@ -63,12 +63,10 @@ const useMainViewModel = () => {
             console.log(msg);
         };
         ws.current.onmessage = (msg: MessageEvent) => {
-            console.log(msg);
-            switch (msg.data) {
-                case "술자리가 시작되었습니다!":
-                    // native 연결
-                    console.log("페이지 변화");
-                    navigate("/main");
+            const data = JSON.parse(msg.data);
+            switch (data.eventType) {
+                case "change":
+                    navigate("/drink");
                     break;
                 case "dispenser01에 술잔이 등록되었습니다":
                     refetch();

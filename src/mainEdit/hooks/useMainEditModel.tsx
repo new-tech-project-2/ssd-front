@@ -44,8 +44,8 @@ const useMainEditModel = ({
             const { data: updateData } = await customAxios.patch(
                 `/glass/${id}`,
                 {
-                    totalCapacity: inputCapacity,
                     drinkerName: inputName,
+                    totalCapacity: inputCapacity,
                     detail: inputDetail,
                 },
                 {

@@ -7,12 +7,11 @@ const RegisteredUser = ({
     drinkerName,
     detail,
 }: {
-    glassId: number;
+    glassId: string;
     totalCapacity: number;
     drinkerName: string;
     detail: string;
 }) => {
-    const id = String(glassId);
     return (
         <div className="card shadow-md">
             <div className="card-body flex flex-row p-3">
@@ -29,7 +28,7 @@ const RegisteredUser = ({
                 </div>
                 <div className="card-action">
                     <label
-                        htmlFor={`modal-${id}`}
+                        htmlFor={`modal-${glassId}`}
                         className="btn modal-button btn-secondary ml-1 rounded-lg w-14 h-14 shrink-0"
                     >
                         <BiEditAlt className="text-2xl" />
@@ -38,7 +37,7 @@ const RegisteredUser = ({
             </div>
 
             <MainEdit
-                id={id}
+                id={glassId}
                 totalCapacity={totalCapacity}
                 drinkerName={drinkerName}
                 detail={detail}
