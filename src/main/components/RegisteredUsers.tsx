@@ -20,7 +20,7 @@ const RegisteredUsers = ({ drinkers }: { drinkers: Drinker[] }) => {
             {drinkers.map((registeredUser: Drinker) => {
                 return (
                     <RegisteredUser
-                        key={registeredUser.id}
+                        key={registeredUser.glassId}
                         {...registeredUser}
                     />
                 );

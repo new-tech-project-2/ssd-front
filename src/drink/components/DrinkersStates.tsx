@@ -7,7 +7,10 @@ const DrinksStates = ({ drinkers }: { drinkers: Drinker[] }) => {
             <span className="text-2xl">현재 상태</span>
             {drinkers.map((registeredUser: Drinker) => {
                 return (
-                    <DrinkerState key={registeredUser.id} {...registeredUser} />
+                    <DrinkerState
+                        key={registeredUser.glassId}
+                        {...registeredUser}
+                    />
                 );
             })}
         </div>

@@ -2,16 +2,17 @@ import { BiEditAlt } from "react-icons/bi";
 import MainEdit from "../../mainEdit/MainEdit";
 
 const RegisteredUser = ({
-    id,
+    glassId,
     totalCapacity,
     drinkerName,
     detail,
 }: {
-    id: string;
+    glassId: number;
     totalCapacity: number;
     drinkerName: string;
     detail: string;
 }) => {
+    const id = String(glassId);
     return (
         <div className="card shadow-md">
             <div className="card-body flex flex-row p-3">

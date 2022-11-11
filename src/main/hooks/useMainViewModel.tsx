@@ -19,7 +19,7 @@ const useMainViewModel = () => {
     // socket
     // const socket = new WebSocket("ws://192.168.0.42:8080/ws/socket");
     // const socketUrl = "ws://192.168.0.42:8080/ws/socket/glass";
-    const socketUrl = `${process.env.REACT_APP_SOCKET_ROUTE}/ws/socket/glass`;
+    const socketUrl = `${process.env.REACT_APP_SOCKET_ROUTE}`;
     const ws = useRef<WebSocket | null>(null);
     const [socketConnected, setSocketConnected] = useState(false);
 
@@ -27,9 +27,9 @@ const useMainViewModel = () => {
 
     // 현재 연결된 drinkers에 대한 정보 가져오기
     const { status, data, error, refetch, isFetching } = useQuery(
-        ["get/getglass"],
+        ["get/glass"],
         async () => {
-            const { data } = await customAxios.get("/glass/getglass", {
+            const { data } = await customAxios.get("/glass", {
                 headers: authHeader,
             });
 
@@ -40,19 +40,27 @@ const useMainViewModel = () => {
             refetchOnWindowFocus: false,
         }
     );
+
     useEffect(() => {
         ws.current = new WebSocket(socketUrl);
         ws.current.onopen = () => {
             console.log("open!!");
             setSocketConnected(true);
+            ws.current?.send(
+                JSON.stringify({
+                    eventType: "drinkerLogin",
+                    dispenserId: "dispenser01",
+                })
+            );
         };
         ws.current.onerror = (message) => {
             console.log("error!!");
             console.log(message);
         };
-        ws.current.onclose = () => {
+        ws.current.onclose = (msg) => {
             console.log("close!!");
             setSocketConnected(false);
+            console.log(msg);
         };
         ws.current.onmessage = (msg: MessageEvent) => {
             console.log(msg);
@@ -77,6 +85,7 @@ const useMainViewModel = () => {
         return () => {
             ws.current?.close();
             setSocketConnected(false);
+            console.log("닫힘");
         };
     }, []);
     // useEffect(() => {

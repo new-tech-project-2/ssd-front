@@ -14,7 +14,7 @@ const AuthPage = () => {
         ["post/login"],
         async () => {
             const { data } = await customAxios.post(
-                "/dispenser/login",
+                "/login",
                 {},
                 {
                     headers: { dispenserToken: `${dispenserToken}` },
