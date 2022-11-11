@@ -18,6 +18,8 @@ const MainPage = () => {
         startClickHandler,
     } = useMainViewModel();
 
+    const authHeader = useRecoilValue(authHeaderSelector);
+
     return (
         <div className="m-10 flex flex-col">
             <div className="mb-5 flex flex-col">
@@ -32,7 +34,15 @@ const MainPage = () => {
             </div>
             <RegisteredUsers drinkers={data} />
             {isFetching && <LoadingBar />}
-            <div className="flex justify-center py-5">
+            <div className="flex flex-col justify-center py-5">
+                {/* <Button
+                    className="btn-wide mb-2 btn-secondary"
+                    onClick={() => {
+                        customAxios.delete("/drinker", { headers: authHeader });
+                    }}
+                >
+                    전체 삭제
+                </Button> */}
                 <Button className="btn-wide" onClick={startClickHandler}>
                     시작하기
                 </Button>
