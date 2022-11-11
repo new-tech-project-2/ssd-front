@@ -41,6 +41,17 @@ const useMainViewModel = () => {
         }
     );
 
+    const startClickHandler = () => {
+        if (ws.current != null && ws.current?.readyState === 1) {
+            ws.current.send(
+                JSON.stringify({
+                    eventType: "startDispenser",
+                    dispenserId: "dispenser01",
+                })
+            );
+        }
+    };
+
     useEffect(() => {
         ws.current = new WebSocket(socketUrl);
         ws.current.onopen = () => {
@@ -68,35 +79,19 @@ const useMainViewModel = () => {
                 case "change":
                     refetch();
                     break;
-                case "dispenser01에 술잔이 등록되었습니다":
-                    // navigate("/main");
+                case "start":
+                    navigate("/drink");
                     break;
             }
         };
-        // const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
-        //     path: "/ws/socker/glass",
-        //     query: { authToken },
-        // });
-        // socket.on("addGlass", () => {
-        //     refetch();
-        // });
+
         return () => {
             ws.current?.close();
             setSocketConnected(false);
             console.log("닫힘");
         };
     }, []);
-    // useEffect(() => {
-    //     console.log("socketConnected");
-    //     if (ws.current?.readyState === 1 && ws.current != null) {
-    //         console.log("send!!");
-    //         ws.current?.send(`startDispenser:${"dispenser01"}`);
-    //         console.log(JSON.stringify({ startDispenser: "dispenser01" }));
-    //         // ws.current!.onmessage = (msg: MessageEvent) => {
-    //         //     console.log(msg);
-    //         // };
-    //     }
-    // }, [socketConnected]);
+
     useEffect(() => {
         if (data) {
             setNumOfDrinkers(data.length);
@@ -109,7 +104,13 @@ const useMainViewModel = () => {
         }
     }, [isFetching]);
 
-    return { numOfDrinkers, totalAmountDrink, data, isFetching, ws };
+    return {
+        numOfDrinkers,
+        totalAmountDrink,
+        data,
+        isFetching,
+        startClickHandler,
+    };
 };
 
 export default useMainViewModel;
