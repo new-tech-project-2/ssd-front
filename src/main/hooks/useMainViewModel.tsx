@@ -17,11 +17,8 @@ const useMainViewModel = () => {
     const [totalAmountDrink, setTotalAmountDrink] = useState(0);
 
     // socket
-    // const socket = new WebSocket("ws://192.168.0.42:8080/ws/socket");
-    // const socketUrl = "ws://192.168.0.42:8080/ws/socket/glass";
     const socketUrl = `${process.env.REACT_APP_SOCKET_ROUTE}`;
     const ws = useRef<WebSocket | null>(null);
-    const [socketConnected, setSocketConnected] = useState(false);
 
     const navigate = useNavigate();
 
@@ -56,7 +53,6 @@ const useMainViewModel = () => {
         ws.current = new WebSocket(socketUrl);
         ws.current.onopen = () => {
             console.log("open!!");
-            setSocketConnected(true);
             ws.current?.send(
                 JSON.stringify({
                     eventType: "drinkerLogin",
@@ -70,7 +66,6 @@ const useMainViewModel = () => {
         };
         ws.current.onclose = (msg) => {
             console.log("close!!");
-            setSocketConnected(false);
             console.log(msg);
         };
         ws.current.onmessage = (msg: MessageEvent) => {
@@ -87,7 +82,6 @@ const useMainViewModel = () => {
 
         return () => {
             ws.current?.close();
-            setSocketConnected(false);
             console.log("닫힘");
         };
     }, []);

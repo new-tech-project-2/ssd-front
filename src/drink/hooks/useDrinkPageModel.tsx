@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { io } from "socket.io-client";
@@ -22,11 +22,15 @@ const useDrinkPageModel = () => {
     // 과음 상태에 대한 state (과음한 사람들 이름 리스트)
     const [overDrink, setOverDrink] = useState<string[]>([]);
 
+    // socket
+    const socketUrl = `${process.env.REACT_APP_SOCKET_ROUTE}`;
+    const ws = useRef<WebSocket | null>(null);
+
     // 현재 연결된 drinkers에 대한 정보 가져오기
     const { data, refetch, isFetching } = useQuery(
-        ["get/getglass"],
+        ["get/glass"],
         async () => {
-            const { data } = await customAxios.get("/glass/getglass", {
+            const { data } = await customAxios.get("/glass", {
                 headers: authHeader,
             });
 
@@ -55,7 +59,7 @@ const useDrinkPageModel = () => {
             for (let i = 0; i < data.length; i++) {
                 if (data[i].currentDrink === data[i].totalCapacity + 1) {
                     setOverDrink((prev: string[]) => {
-                        return [...prev, data[i].name];
+                        return [...prev, data[i].drinkerName];
                     });
                 }
             }
@@ -74,24 +78,52 @@ const useDrinkPageModel = () => {
 
     // 누군가 술을 마시는 경우를 대비해 socket 연결 후, change message에 대해 듣고 있도록
     useEffect(() => {
-        const socket = io(`${process.env.REACT_APP_API_ROUTE}`, {
-            path: "/sw/socket/glass",
-            query: { authToken },
-        });
-        socket.on("drinkOneGlass", () => {
-            refetch();
-        });
+        ws.current = new WebSocket(socketUrl);
+        ws.current.onopen = () => {
+            console.log("open!!");
+            ws.current?.send(
+                JSON.stringify({
+                    eventType: "drinkerLogin",
+                    dispenserId: "dispenser01",
+                })
+            );
+        };
+        ws.current.onerror = (message) => {
+            console.log("error!!");
+            console.log(message);
+        };
+        ws.current.onclose = (msg) => {
+            console.log("close!!");
+            console.log(msg);
+        };
+        ws.current.onmessage = (msg: MessageEvent) => {
+            const data = JSON.parse(msg.data);
+            switch (data.eventType) {
+                case "change":
+                    refetch();
+                    break;
+                case "stop":
+                    navigate("/main");
+                    break;
+            }
+        };
+
         return () => {
-            socket.close();
+            ws.current?.close();
+            console.log("닫힘");
         };
     }, []);
 
     // 중지하기 버튼 클릭 시
     const stopHandler = () => {
-        customAxios.delete("/dispenser", {
-            headers: authHeader,
-        });
-        navigate("/");
+        if (ws.current != null && ws.current?.readyState === 1) {
+            ws.current.send(
+                JSON.stringify({
+                    eventType: "stopDispenser",
+                    dispenserId: "dispenser01",
+                })
+            );
+        }
     };
 
     return {
