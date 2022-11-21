@@ -12,7 +12,7 @@ const DrinkerState = ({
     return (
         <div className="card shadow-md">
             <div className="card-body flex flex-row justify-between p-3">
-                <div className="flex flex-col mx-4 w-36">
+                <div className="flex flex-col mx-4 w-40 truncate">
                     <span className="font-bold truncate">{drinkerName}</span>
                     <span className="truncate">{detail}</span>
                 </div>
