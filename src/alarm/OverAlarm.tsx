@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import Button from "../common/components/Button";
+import alertSound from "./sound/alertSound.mp3";
 
 const OverAlarm = ({ overDrink }: { overDrink: string[] }) => {
     const [isAlarm, setIsAlarm] = useState(false);
+    const alertAudio = new Audio(alertSound);
 
     useEffect(() => {
         console.log(overDrink, isAlarm);
         if (overDrink.length !== 0) {
             setIsAlarm(true);
+            const playPromise = alertAudio.play();
+            playPromise
+                .then(() => {
+                    // automatic play() start
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
 
         return () => {
