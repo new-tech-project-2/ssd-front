@@ -17,6 +17,7 @@ root.render(
     <React.StrictMode>
         <RecoilRoot>
             <App />
+            <div id="modal-root"></div>
         </RecoilRoot>
     </React.StrictMode>
 );

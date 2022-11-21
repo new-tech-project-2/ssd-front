@@ -11,7 +11,7 @@ const InputBox = ({
 }) => {
     return (
         <label className="input-group mb-2 justify-center">
-            <span>{title}</span>
+            <span className="w-15 shrink-0">{title}</span>
             <input
                 type={type}
                 placeholder={`${title}을 입력하세요.`}
