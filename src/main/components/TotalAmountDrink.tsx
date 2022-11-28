@@ -11,7 +11,7 @@ const TotalAmountDrink = ({
                 <GiWineBottle className="text-3xl" />
             </div>
             <span className="text-center font-semibold">
-                {`${totalAmountDrink}병`}
+                {`${Math.ceil(totalAmountDrink)}병`}
             </span>
         </div>
     );

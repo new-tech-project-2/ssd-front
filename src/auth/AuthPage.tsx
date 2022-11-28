@@ -11,11 +11,15 @@ const AuthPage = () => {
 
     const setAuthToken = useSetRecoilState(authTokenState);
     const { status, data, error, refetch } = useQuery(
-        ["auth"],
+        ["post/login"],
         async () => {
-            const { data } = await customAxios.post("/auth", {
-                dispenserToken: dispenserToken,
-            });
+            const { data } = await customAxios.post(
+                "/login",
+                {},
+                {
+                    headers: { dispenserToken: `${dispenserToken}` },
+                }
+            );
 
             return data;
         },
@@ -36,40 +40,43 @@ const AuthPage = () => {
                 "flex h-full w-full flex-col items-center justify-center px-5"
             }
         >
-            <h1 className="pb-10 text-8xl font-black text-primary">SSD</h1>
-            <h2 className="pb-10 text-center text-4xl font-bold text-secondary">
+            <div className="flex flex-col flex-1 justify-center">
+                <h1 className="pb-10 text-8xl font-black text-primary">SSD</h1>
+                {/* <h2 className="pb-10 text-center text-4xl font-bold text-secondary">
                 건전하고 <br />
                 공정한
                 <br />
                 술자리를
                 <br />
                 위하여
-            </h2>
-            <PrimaryTextField
-                label="인증 토큰"
-                placeholder="인증 토큰을 입력하세요"
-                onChange={(event) => {
-                    setDispenserToken(event.target.value);
-                }}
-                errorMessage="인증 토큰이 잘못됐습니다."
-                isError={!data.success}
-            />
-
-            <button
-                className={`btn btn-primary btn-wide text-xl ${
-                    data.success ? "btn-active" : "btn-disabled"
-                }`}
-                onClick={() => {
-                    setAuthToken(data.authToken);
-                }}
-            >
-                시작하기
-            </button>
-            <div className="absolute bottom-5">
-                <p className="text-center text-gray-500">
-                    &copy;2022 최신 기술 프로젝트 2 TEAM SSD
-                </p>
+            </h2> */}
+                <img className="h-48 w-48 pb-10" src="media/logo.svg" />
             </div>
+            <div>
+                <PrimaryTextField
+                    label="인증 토큰"
+                    placeholder="인증 토큰을 입력하세요"
+                    onChange={(event) => {
+                        setDispenserToken(event.target.value);
+                    }}
+                    errorMessage="인증 토큰이 잘못됐습니다."
+                    isError={!data.success}
+                />
+
+                <button
+                    className={`btn btn-primary text-xl w-full my-16 p-8 content-center ${
+                        data.success ? "btn-active" : "btn-disabled"
+                    }`}
+                    onClick={() => {
+                        setAuthToken(data.drinkerToken);
+                    }}
+                >
+                    시작하기
+                </button>
+            </div>
+            <p className="text-center text-gray-500">
+                &copy;2022 최신 기술 프로젝트 2 TEAM SSD
+            </p>
         </div>
     );
 };

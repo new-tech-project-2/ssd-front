@@ -13,16 +13,16 @@ export const PrimaryTextField = ({
     onChange?: ChangeEventHandler<HTMLInputElement>;
 }) => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
             <input
                 onChange={onChange}
                 type="text"
                 placeholder={placeholder}
                 className={`input input-bordered ${
                     isError ? "input-error" : "input-primary"
-                } input-lg w-full max-w-xs`}
+                } input-lg w-full`}
             />
-            <label className="">
+            <label className="pt-2 pl-4">
                 <span
                     className={`${isError ? "text-error" : "text-transparent"}`}
                 >

@@ -1,8 +1,11 @@
 interface Drinker {
-    id: string;
-    capacity: number;
-    name: string;
+    glassId: string;
+    drinkerName: string;
     detail: string;
+    totalCapacity: number;
+    currentDrink: number;
+    lastDrinkTimeStamp: number;
+    dispenserId: string;
 }
 
 export default Drinker;

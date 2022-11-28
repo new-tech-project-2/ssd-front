@@ -1,12 +1,15 @@
 import { BiEditAlt } from "react-icons/bi";
+import MainEdit from "../../mainEdit/MainEdit";
 
 const RegisteredUser = ({
-    capacity,
-    name,
+    glassId,
+    totalCapacity,
+    drinkerName,
     detail,
 }: {
-    capacity: number;
-    name: string;
+    glassId: string;
+    totalCapacity: number;
+    drinkerName: string;
     detail: string;
 }) => {
     return (
@@ -14,20 +17,31 @@ const RegisteredUser = ({
             <div className="card-body flex flex-row p-3">
                 <div className="card-title mr-1">
                     <span className="text-3xl text-primary shrink-0 w-16">
-                        {capacity}잔
+                        {totalCapacity}잔
                     </span>
                 </div>
                 <div className="flex flex-col flex-grow mx-1 truncate">
-                    <span className="font-bold mb-1 truncate">{name}</span>
+                    <span className="font-bold mb-1 truncate">
+                        {drinkerName}
+                    </span>
                     <span className="truncate">{detail}</span>
                 </div>
                 <div className="card-action">
-                    <button className="btn btn-secondary ml-1 rounded-lg w-14 h-14 shrink-0">
+                    <label
+                        htmlFor={`modal-${glassId}`}
+                        className="btn modal-button btn-secondary ml-1 rounded-lg w-14 h-14 shrink-0"
+                    >
                         <BiEditAlt className="text-2xl" />
-                    </button>
+                    </label>
                 </div>
             </div>
-            <img />
+
+            <MainEdit
+                id={glassId}
+                totalCapacity={totalCapacity}
+                drinkerName={drinkerName}
+                detail={detail}
+            />
         </div>
     );
 };
